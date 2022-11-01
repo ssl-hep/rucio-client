@@ -1,0 +1,25 @@
+name: tests
+on:
+  push:
+    branches:
+      - "*"
+    tags:
+      - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    name: build
+    steps:
+      - uses: actions/checkout@master
+      - name: Extract tag name
+        shell: bash
+        run: echo "##[set-output name=imagetag;]$(echo ${GITHUB_REF##*/})"
+        id: extract_tag_name
+      - name: Build Docker Image
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: sslhep/rucio-client:${{ steps.extract_tag_name.outputs.imagetag }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
