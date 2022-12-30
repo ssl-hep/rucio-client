@@ -18,7 +18,7 @@ jobs:
         run: echo "##[set-output name=imagetag;]$(echo ${GITHUB_REF##*/})"
         id: extract_tag_name
       - name: Build Docker Image
-        uses: elgohr/Publish-Docker-Github-Action@master
+        uses: elgohr/Publish-Docker-Github-Action@v5
         with:
           name: sslhep/rucio-client:${{ steps.extract_tag_name.outputs.imagetag }}
           username: ${{ secrets.DOCKER_USERNAME }}
