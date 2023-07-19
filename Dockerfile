@@ -29,6 +29,7 @@ RUN python3 -m pip install --no-cache-dir --upgrade setuptools && \
 # enable bash completion for the rucio clients
 ADD init_rucio.sh /etc/profile.d/rucio_init.sh
 ADD rucio.cfg /opt/rucio/etc/rucio.cfg
+ADD gai.conf /etc/gai.conf
 ENV PATH $PATH:/opt/rucio/bin
 
 CMD ["/bin/bash"]
