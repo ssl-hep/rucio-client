@@ -1,4 +1,4 @@
-FROM opensciencegrid/software-base:3.6-el8-release
+FROM opensciencegrid/software-base:23-el9-release
 
 RUN yum install -y epel-release.noarch && \
     yum clean all && \
@@ -7,9 +7,10 @@ RUN yum upgrade -y && \
     yum clean all && \
     rm -rf /var/cache/yum
 
-RUN yum install -y python39 python39-pip python39-psutil python39-requests
+RUN yum install -y python3-pip
 
 RUN yum install -y https://repo.opensciencegrid.org/osg/3.6/osg-3.6-el8-release-latest.rpm
+RUN yum install -y https://repo.opensciencegrid.org/osg/23-main/el9/release/x86_64/vo-client-136-1.osg23.el9.noarch.rpm
 RUN yum install osg-ca-certs voms voms-clients fetch-crl -y
 
 RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm; \
@@ -17,9 +18,6 @@ RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.n
     curl -s -o /etc/yum.repos.d/wlcg-centos8.repo http://linuxsoft.cern.ch/wlcg/wlcg-centos8.repo;
 
 RUN yum install -y wlcg-voms-atlas wlcg-voms-cms
-
-RUN rm /etc/alternatives/python3
-RUN ln -s /usr/bin/python3.9 /etc/alternatives/python3
 
 # Upgrade pip & setuptools and install Rucio
 RUN python3 -m pip install --no-cache-dir --upgrade setuptools && \
