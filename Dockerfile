@@ -1,4 +1,4 @@
-FROM opensciencegrid/software-base:23-el9-release
+FROM opensciencegrid/software-base:24-el9-release
 
 RUN yum install -y epel-release.noarch && \
     yum clean all && \
@@ -9,13 +9,13 @@ RUN yum upgrade -y && \
 
 RUN yum install -y python3-pip
 
-RUN yum install -y https://repo.opensciencegrid.org/osg/3.6/osg-3.6-el8-release-latest.rpm
-RUN yum install -y https://repo.opensciencegrid.org/osg/23-main/el9/release/x86_64/vo-client-136-1.osg23.el9.noarch.rpm
+RUN yum install -y https://repo.opensciencegrid.org/osg/24-main/osg-24-main-el9-release-latest.rpm
+RUN yum install -y https://repo.opensciencegrid.org/osg/24-main/el9/release/x86_64/Packages/v/vo-client-138-1.osg24.el9.noarch.rpm
 RUN yum install osg-ca-certs voms voms-clients fetch-crl -y
 
-RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm; \
+RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm; \
     curl -s -o /etc/pki/rpm-gpg/RPM-GPG-KEY-wlcg http://linuxsoft.cern.ch/wlcg/RPM-GPG-KEY-wlcg; \
-    curl -s -o /etc/yum.repos.d/wlcg-centos8.repo http://linuxsoft.cern.ch/wlcg/wlcg-centos8.repo;
+    curl -s -o /etc/yum.repos.d/wlcg-el9.repo http://linuxsoft.cern.ch/wlcg/wlcg-el9.repo;
 
 RUN yum install -y wlcg-voms-atlas wlcg-voms-cms
 
@@ -28,6 +28,6 @@ RUN python3 -m pip install --no-cache-dir --upgrade setuptools && \
 ADD init_rucio.sh /etc/profile.d/rucio_init.sh
 ADD rucio.cfg /opt/rucio/etc/rucio.cfg
 ADD gai.conf /etc/gai.conf
-ENV PATH $PATH:/opt/rucio/bin
+ENV PATH=$PATH:/opt/rucio/bin
 
 CMD ["/bin/bash"]
