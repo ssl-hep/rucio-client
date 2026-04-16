@@ -7,7 +7,8 @@ RUN yum upgrade -y && \
     yum clean all && \
     rm -rf /var/cache/yum
 
-RUN yum install -y python3-pip
+RUN yum install -y python3.11 python3.11-pip
+RUN ln -sf /usr/bin/python3.11 /usr/bin/python3
 
 RUN yum install -y https://repo.opensciencegrid.org/osg/24-main/osg-24-main-el9-release-latest.rpm
 RUN yum install -y https://repo.opensciencegrid.org/osg/24-main/el9/release/x86_64/Packages/v/vo-client-138-1.osg24.el9.noarch.rpm
@@ -18,6 +19,9 @@ RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.
     curl -s -o /etc/yum.repos.d/wlcg-el9.repo http://linuxsoft.cern.ch/wlcg/wlcg-el9.repo;
 
 RUN yum install -y wlcg-voms-atlas wlcg-voms-cms
+
+RUN yum clean all && \
+    rm -rf /var/cache/yum
 
 # Upgrade pip & setuptools and install Rucio
 RUN python3 -m pip install --no-cache-dir --upgrade setuptools && \
